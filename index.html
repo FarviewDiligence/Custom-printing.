@@ -72,6 +72,23 @@
                 overflow: visible !important;
                 border: none !important;
             }
+            .print-all-tables #morningTable {
+                page-break-after: always;
+                margin-bottom: 0 !important;
+                width: 100% !important;
+                display: block !important;
+            }
+            .print-all-tables #eveningTable {
+                page-break-before: always;
+                margin-bottom: 0 !important;
+                width: 100% !important;
+                display: block !important;
+            }
+            .print-all-tables .table-container {
+                width: 100% !important;
+                display: block !important;
+                margin-bottom: 0 !important;
+            }
         }
     </style>
 </head>
@@ -81,6 +98,15 @@
             <div class="col-12">
                 <h1 class="text-center text-primary mb-4">Hotel Housekeeping Management</h1>
                 <p class="text-center text-muted">Staff Room Assignments for Daily Housekeeping Operations</p>
+            </div>
+        </div>
+
+        <!-- Print All Button -->
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <button class="btn btn-primary btn-lg shadow" onclick="printAllTables()" style="padding: 15px 30px; font-size: 18px; font-weight: bold;">
+                    🖨️ Print All Tables
+                </button>
             </div>
         </div>
 
@@ -440,6 +466,36 @@
             setTimeout(() => {
                 document.title = originalTitle;
                 tableContainer.classList.remove('print-target');
+            }, 100);
+        }
+
+        function printAllTables() {
+            // Get the container with both tables
+            const container = document.querySelector('.container');
+            
+            // Remove any existing print-target class from all elements
+            document.querySelectorAll('.print-target').forEach(el => {
+                el.classList.remove('print-target');
+            });
+            
+            // Add print-target class to the entire container
+            container.classList.add('print-target');
+            container.classList.add('print-all-tables');
+            
+            // Store the original title
+            const originalTitle = document.title;
+            
+            // Set a title for the combined print
+            document.title = 'All Tables - Hotel Housekeeping Management';
+            
+            // Print the page
+            window.print();
+            
+            // Restore original title and remove print classes
+            setTimeout(() => {
+                document.title = originalTitle;
+                container.classList.remove('print-target');
+                container.classList.remove('print-all-tables');
             }, 100);
         }
     </script>
